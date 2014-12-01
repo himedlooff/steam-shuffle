@@ -1,0 +1,36 @@
+doctype html
+html(lang='en')
+	head
+		meta(http-equiv="content-type", content="text/html; charset=UTF-8")
+		meta(name="author", content="Anna Czerwiec")
+		link(rel='shortcut icon' href="/images/favicon.ico")
+		link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap-theme.min.css')
+	body
+		block navigation
+			nav.navbar.navbar-default(role='navigation')
+				.container-fluid
+					.navbar-header
+						button(type='button', class='navbar-toggle collapsed', data-toggle='collapse')
+							span.sr-only
+								Steam Shuffle
+							span.icon-bar
+							span.icon-bar
+							span.icon-bar
+						a.navbar-brand(href='#')
+							span.glyphicon.glyphicon-random
+					.collapse.navbar-collapse
+						ul.nav.navbar-nav
+							li.active
+								a(href='#')
+									|Home
+							li
+								a(href="#")
+									|Games
+						ul.nav.navbar-nav.navbar-right
+							li
+								a(href='#')
+									span.glyphicon.glyphicon-user
+									|&nbsp;Log in
+		block content
+		script(src='/javascripts/jquery-1.11.1.min.js')
+		script(src='/javascripts/bootstrap.min.js')
