@@ -6,5 +6,6 @@ block content
 		|Game count
 		!{lib.game_count}
 	- for (var el in lib.games)
-		p #{el}: #{lib.games[el].name} 
-	p #{lib.games[0].name}
+		p.well
+			img(src=" http://media.steampowered.com/steamcommunity/public/images/apps/#{lib.games[el].appid}/#{lib.games[el].img_logo_url}.jpg")
+			!{el}: #{lib.games[el].name} - #{lib.games[el].playtime_2weeks} - #{lib.games[el].playtime_forever}

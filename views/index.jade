@@ -3,8 +3,11 @@ extends layout
 block content
 	.container
 		.jumbotron
-			h1
-				|Steam Shuffle
-			p
-				a.btn.btn-primary.btn-lg(href='#', role='button')
-					|Shuffle!
+			h3
+				if (!user)
+					|Steam Shuffle
+				else
+					|Hi !{user.displayName}
+			//- p
+			//- 	a.btn.btn-primary.btn-lg(href='#', role='button')
+			//- 		|Shuffle!
