@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	p
+		|ID: !{user._json.steamid}
+	p
+		|Name: !{user._json.personaname}
+	p
+		|Real name: !{user._json.realname}
+	p
+		|profilestate !{user._json.profilestate}
+	p
+		|profileurl !{user._json.profileurl}
+	p
+		|personastate !{user._json.personastate}
+	p
+		|personanameflags !{user._json.personastateflags}

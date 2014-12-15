@@ -1,0 +1,10 @@
+extends layout
+
+block content
+	- var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
+	h1
+		|Game count
+		!{lib.game_count}
+	- for (var el in lib.games)
+		p #{el}: #{lib.games[el].name} 
+	p #{lib.games[0].name}
