@@ -22,7 +22,7 @@ passport.deserializeUser(function(obj, done) {
 
 
 passport.use(new SteamStrategy({
-    returnURL:'http://steamshuffle.herokuapp.com/steam/return',
+    returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
     realm: 'http://steamshuffle.herokuapp.com/',
     apiKey: process.env.API_KEY
     },
@@ -44,8 +44,7 @@ passport.use(new SteamStrategy({
 router.get('/',
 	passport.authenticate('steam', { failureRedirect: '/login' }),
 	function(req, res) {
-		console.log(JSON.stringify(req.session, null, 2));
-		res.redirect('/');
+		console.log(JSON.stringify(req.session, null, 2));res.redirect('/');
   });
 
 // GET /auth/steam/return
