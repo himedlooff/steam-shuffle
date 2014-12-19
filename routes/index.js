@@ -3,7 +3,8 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res) {
-	res.render('index', {user : req.user});
+	//console.log(req.session.games);
+	res.render('index', {result : JSON.stringify(req.session.games), user : req.user});
 });
 
 module.exports = router;

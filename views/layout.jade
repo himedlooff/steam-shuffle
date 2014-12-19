@@ -5,6 +5,7 @@ html(lang='en')
 		meta(name="author", content="Anna Czerwiec")
 		link(rel='shortcut icon' href="/images/favicon.ico")
 		link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap-theme.min.css')
+		link(rel='stylesheet', type='text/css', href='/stylesheets/font-awesome.min.css')
 	body
 		block navigation
 			nav.navbar.navbar-default(role='navigation')
@@ -12,7 +13,7 @@ html(lang='en')
 					.navbar-header
 						button(type='button', class='navbar-toggle collapsed', data-toggle='collapse')
 							span.sr-only
-								Steam Shuffle
+								|Steam Shuffle
 							span.icon-bar
 							span.icon-bar
 							span.icon-bar
@@ -24,6 +25,9 @@ html(lang='en')
 								a(href='/')
 									|Home
 							li
+								a(href='/about')
+									|About
+							li
 								a(href='/games')
 									|Games
 						ul.nav.navbar-nav.navbar-right
@@ -33,20 +37,22 @@ html(lang='en')
 										img(src='/images/sits_small.png')
 								else
 									a(href="#", class="dropdown-toggle" data-toggle="dropdown", role="button", aria-expanded="false")
-										img(src=user.photos[0].value, alt="avatar", class="21x")
-										&nbsp !{user.displayName}
+										img(src=user.photos[0].value, alt="avatar", class="21x") 
+										|&nbsp !{user.displayName}
 										span.caret
 									ul.dropdown-menu(role="menu")
 										li
 											a(href="account")
 												span.glyphicon.glyphicon-user
-												&nbsp
-												|Account
+												|&nbsp Account
+										li
+											a(href="games")
+												span.glyphicon.glyphicon-list
+												|&nbsp Games
 										li
 											a(href="/logout")
 												span.glyphicon.glyphicon-log-out
-												&nbsp
-												|Logout
+												|&nbsp Logout
 		block content
 		script(src='/javascripts/jquery-1.11.1.min.js')
 		script(src='/javascripts/bootstrap.min.js')

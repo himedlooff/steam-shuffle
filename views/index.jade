@@ -3,11 +3,22 @@ extends layout
 block content
 	.container
 		.jumbotron
-			h3
-				if (!user)
+			if (!user)
+				h3
 					|Steam Shuffle
-				else
-					|Hi !{user.displayName}
-			//- p
-			//- 	a.btn.btn-primary.btn-lg(href='#', role='button')
-			//- 		|Shuffle!
+			else
+				- var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
+				h3
+					|Heyo !{user.displayName} !
+				br
+				if (result)
+					|Wow... 
+					a(href="/games")
+						|!{lib.game_count} games
+					|, eh?
+					br
+					|So you went crazy on the couple steam sales? 
+					br
+					|Don’t waste hours trying to pick something you’d enjoy and leave that to the power of the s h u f f l e!
+					br
+					|Enjoy steam-sale-guiltless life!

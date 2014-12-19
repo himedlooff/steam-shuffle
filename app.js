@@ -2,7 +2,7 @@
 
 var express = require('express'),
     path = require('path'),
-    //favicon = require('serve-favicon'),
+    favicon = require('serve-favicon'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
@@ -16,6 +16,7 @@ var routes = require('./routes/index'),
     login = require('./routes/login'),
     logout = require('./routes/logout'),
     auth = require('./routes/auth'),
+    about = require('./routes/about'),
     account = require('./routes/account');
 
 var app = express();
@@ -26,7 +27,8 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -49,7 +51,7 @@ app.use('/login', login);
 app.use('/logout', logout);
 app.use('/auth/steam', auth);
 app.use('/account', account);
-
+app.use('/about', about);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

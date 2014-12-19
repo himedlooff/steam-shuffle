@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport'),
   	SteamStrategy = require('./../node_modules/passport-steam/lib/passport-steam').Strategy;
-
+var Steam = require('steam-webapi');
+	Steam.key = process.env.API_KEY;
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -56,7 +57,65 @@ router.get('/',
 router.get('/return',
 	passport.authenticate('steam', { failureRedirect: '/auth/steam' }),
 	function(req, res) {
-		res.redirect('/');
+
+	Steam.ready( function(err) {
+	    if (err) return console.log(err);
+	    var steam = new Steam();
+	    steam.key = process.env.API_KEY;
+	    
+	    // function renderGames (err, gamesData) {
+	    // 	if(err) return console.error(err);
+	    // 	res.render('games', { result : JSON.stringify(gamesData), user: req.user});
+	    // }
+
+	    // if(req.session.games) {
+	    // 	// renderGames(null, req.session.games);
+	    // 	return;
+	    // }
+
+	    var data = {
+	        key: process.env.API_KEY,
+	        steamid : req.user._json.steamid,
+	        // include_appinfo : true,
+	        // include_played_free_games :true,
+	        include_appinfo : true,
+	        include_played_free_games : true,
+	        //appids_filter : ""
+	        appids_filter: [ 570, 500, 550 ]
+	    };
+
+	    steam.getOwnedGames(data, function (err, result) {
+	    	req.session.games = !err ? result : null;
+	    	addStringTime(req.session.games);
+
+	    	console.log("Saving game in session.");
+	    	res.redirect('/');
+	    });
+	});
+
+	
+	function stringTime(minutes){
+		var time ="";
+		var d =  Math.floor (minutes / 1440);
+		var h = Math.floor ((minutes - d * 1440) / 60);
+		var m = minutes - (d * 1440) - (h * 60);
+
+		h = h? String(h) + " hours " : "";
+		d = d? String(d) + " days " : "";
+		m = m ? String(m) + " minutes" : "";
+
+		return d + h +  m ;
+	}
+
+	function addStringTime(result){
+		var result_array = result.games;
+		var result_length = result_array.length;
+
+		for(var i=0 ; i< result_length; i++){
+			result_array[i].sum_2weeks = stringTime(result_array[i].playtime_2weeks);
+		    result_array[i].sum_forever = stringTime(result_array[i].playtime_forever);
+		}
+	}
   });
 
 module.exports = router;

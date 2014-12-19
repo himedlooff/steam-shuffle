@@ -2,10 +2,46 @@ extends layout
 
 block content
 	- var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
-	h1
-		|Game count
-		!{lib.game_count}
-	- for (var el in lib.games)
-		p.well
-			img(src=" http://media.steampowered.com/steamcommunity/public/images/apps/#{lib.games[el].appid}/#{lib.games[el].img_logo_url}.jpg")
-			!{el}: #{lib.games[el].name} - #{lib.games[el].playtime_2weeks} - #{lib.games[el].playtime_forever}
+	.container
+		//- h1
+			//- |Game count !{lib.game_count}
+		table.table.table-hover.table-condensed
+			thead
+				tr
+					th.col-sm-3
+						i.fa.fa-steam
+						|&nbsp game
+					th.col-sm-3.text-center
+						i.fa.fa-history
+						|&nbsp 2 weeks
+					th.col-sm-3.text-center
+						i.fa.fa-clock-o
+						|&nbsp forever
+					th.col-sm-1
+						i.fa.fa-play 
+						|&nbsp play
+			- for (var el in lib.games)
+				tr
+					td
+						|!{lib.games[el].name}
+						br
+						if lib.games[el].img_logo_url
+							img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{lib.games[el].appid}/#{lib.games[el].img_logo_url}.jpg")
+						else
+							img(src="http://placehold.it/184x69")
+					td.text-center			
+						if lib.games[el].playtime_2weeks
+							//- != lib.games[el].playtime_2weeks
+							!= lib.games[el].sum_2weeks
+						else
+							| 0 minutes
+					td.text-center
+						if lib.games[el].playtime_forever
+							//- != lib.games[el].playtime_forever
+							!= lib.games[el].sum_forever
+						else
+							| 0 minutes
+					td
+						a(href="steam://run/#{lib.games[el].appid}")
+							i.fa.fa-play.fa-2x
+

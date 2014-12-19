@@ -1,46 +1,51 @@
 var express = require('express');
 var Steam = require('steam-webapi');
-	Steam.key = process.env.API_KEY;
 var router = express.Router();
 
 /* GET users games. */
 router.get('/', ensureAuthenticated, function(req, res){
-	Steam.ready( function(err) {
-	    if (err) return console.log(err);
-	    var steam = new Steam();
-	    steam.key = process.env.API_KEY;
-	    
+
+
 	    function renderGames (err, gamesData) {
 	    	if(err) return console.error(err);
+	    	addStringTime(gamesData);
 	    	res.render('games', { result : JSON.stringify(gamesData), user: req.user});
 	    }
+
 
 	    if(req.session.games) {
 	    	renderGames(null, req.session.games);
 	    	return;
 	    }
-
-	    var data = {
-	        key: process.env.API_KEY,
-	        steamid : req.user._json.steamid,
-	        include_appinfo : true,
-	        include_played_free_games :true,
-	        appids_filter : ""
-	    };
-
-	    steam.getOwnedGames(data, function (err, result) {
-	    	req.session.games = !err ? result : null;
-	    	renderGames(err, result);
-	    });
-	});
 });
+
+function stringTime(minutes){
+	var time ="";
+	var d =  Math.floor (minutes / 1440);
+	var h = Math.floor ((minutes - d * 1440) / 60);
+	var m = minutes - (d * 1440) - (h * 60);
+
+	h = h? String(h) + " hours " : "";
+	d = d? String(d) + " days " : "";
+	m = m ? String(m) + " minutes" : "";
+
+	return d + h +  m ;
+}
+
+function addStringTime(result){
+	var result_array = result.games;
+	var result_length = result_array.length;
+
+	for(var i=0 ; i< result_length; i++){
+		result_array[i].sum_2weeks = stringTime(result_array[i].playtime_2weeks);
+	    result_array[i].sum_forever = stringTime(result_array[i].playtime_forever);
+	}
+}
 
 
 function ensureAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) { 
-		return next(); 
-	}
-	res.redirect('/auth/steam');
+	if (req.isAuthenticated()) { return next(); }
+	res.redirect('/auth/steam')
 }
 
 module.exports = router;
