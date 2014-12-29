@@ -6,6 +6,8 @@ html(lang='en')
 		link(rel='shortcut icon' href="/images/favicon.ico")
 		link(rel='stylesheet', type='text/css', href='/stylesheets/bootstrap-theme.min.css')
 		link(rel='stylesheet', type='text/css', href='/stylesheets/font-awesome.min.css')
+		link(rel='stylesheet', type='text/css', href='/stylesheets/style.css')
+
 	body
 		block navigation
 			nav.navbar.navbar-default(role='navigation')
@@ -19,11 +21,9 @@ html(lang='en')
 							span.icon-bar
 						a.navbar-brand(href='/')
 							span.glyphicon.glyphicon-random
+							|&nbsp Steam Shuffle
 					.collapse.navbar-collapse
 						ul.nav.navbar-nav
-							li
-								a(href='/')
-									|Home
 							li
 								a(href='/about')
 									|About
@@ -37,7 +37,7 @@ html(lang='en')
 										img(src='/images/sits_small.png')
 								else
 									a(href="#", class="dropdown-toggle" data-toggle="dropdown", role="button", aria-expanded="false")
-										img(src=user.photos[0].value, alt="avatar", class="21x") 
+										img(src=user.photos[0].value, alt="avatar", class="icon") 
 										|&nbsp !{user.displayName}
 										span.caret
 									ul.dropdown-menu(role="menu")
@@ -56,3 +56,4 @@ html(lang='en')
 		block content
 		script(src='/javascripts/jquery-1.11.1.min.js')
 		script(src='/javascripts/bootstrap.min.js')
+		script(src="javascripts/shuffle.js")

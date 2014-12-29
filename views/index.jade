@@ -2,23 +2,65 @@ extends layout
 
 block content
 	.container
-		.jumbotron
+		.well.text-center
 			if (!user)
 				h3
 					|Steam Shuffle
 			else
 				- var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
+				- var random = typeof(rnd) != 'undefined' ? rnd : -1
 				h3
 					|Heyo !{user.displayName} !
-				br
 				if (result)
-					|Wow... 
-					a(href="/games")
-						|!{lib.game_count} games
-					|, eh?
-					br
-					|So you went crazy on the couple steam sales? 
-					br
-					|Don’t waste hours trying to pick something you’d enjoy and leave that to the power of the s h u f f l e!
-					br
-					|Enjoy steam-sale-guiltless life!
+					p
+						|Wow... 
+						a(href="/games")
+							|!{lib.game_count} games, eh?
+					p
+						|So you went crazy on the couple steam sales? 
+					p
+						|Don’t waste hours trying to pick something you’d enjoy and leave that to the power of the 
+						span.shuffle
+							|&nbsp shuffle!
+					p
+						|Enjoy steam-sale-guiltless life!
+					if (random==-1)
+						form(action="/shuffle", method="post")
+							button(type="submit", class="btn btn-default")
+								i.fa.fa-random
+								|&nbsp Shuffle!
+					else
+						.well(class="text-center")
+							|Your game for today!							
+							br
+							if lib.games[random].img_logo_url
+								img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{lib.games[random].appid}/#{lib.games[random].img_logo_url}.jpg")
+							else
+								img(src="http://placehold.it/184x69")
+							br
+							|!{lib.games[random].name}
+							br
+							a(href="steam://run/#{lib.games[random].appid}")
+								i.fa.fa-play 
+								|&nbsp play	
+							br
+							i.fa.fa-history
+							|&nbsp last 2 weeks &nbsp
+							if lib.games[random].playtime_2weeks
+								//- != lib.games[random].playtime_2weeks
+								|!= lib.games[random].sum_2weeks
+							else
+								| 0 minutes
+							br
+							i.fa.fa-clock-o
+							|&nbsp since forever &nbsp
+							if lib.games[random].playtime_forever
+								//- != lib.games[random].playtime_forever
+								!= lib.games[random].sum_forever
+							else
+								| 0 minutes
+							//-|Your game for today : !{lib.games[random].name}
+							form(action="/", method="post")
+								button(type="submit", class="btn btn-default")
+									i.fa.fa-random
+									|&nbsp Shuffle!

@@ -2,9 +2,12 @@ extends layout
 
 block content
 	- var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
+	- var random = typeof(rnd) != 'undefined' ? rnd : 0;
 	.container
 		//- h1
-			//- |Game count !{lib.game_count}
+		//-|Game count !{lib.game_count}
+		h1
+			|Your game for today : !{lib.games[random].name}
 		table.table.table-hover.table-condensed
 			thead
 				tr
@@ -29,7 +32,7 @@ block content
 							img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{lib.games[el].appid}/#{lib.games[el].img_logo_url}.jpg")
 						else
 							img(src="http://placehold.it/184x69")
-					td.text-center			
+					td.text-center
 						if lib.games[el].playtime_2weeks
 							//- != lib.games[el].playtime_2weeks
 							!= lib.games[el].sum_2weeks

@@ -80,14 +80,14 @@ router.get('/return',
 	        // include_played_free_games :true,
 	        include_appinfo : true,
 	        include_played_free_games : true,
-	        //appids_filter : ""
-	        appids_filter: [ 570, 500, 550 ]
+	        appids_filter : ""
+	        //appids_filter: [ 570, 500, 550 ]
 	    };
 
 	    steam.getOwnedGames(data, function (err, result) {
 	    	req.session.games = !err ? result : null;
 	    	addStringTime(req.session.games);
-
+	    	console.log("-----------------------------------------");
 	    	console.log("Saving game in session.");
 	    	res.redirect('/');
 	    });

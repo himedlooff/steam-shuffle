@@ -17,7 +17,9 @@ var routes = require('./routes/index'),
     logout = require('./routes/logout'),
     auth = require('./routes/auth'),
     about = require('./routes/about'),
+    shuffle = require('./routes/shuffle'),
     account = require('./routes/account');
+
 
 var app = express();
 
@@ -52,6 +54,8 @@ app.use('/logout', logout);
 app.use('/auth/steam', auth);
 app.use('/account', account);
 app.use('/about', about);
+app.use('/shuffle', shuffle);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -83,6 +87,7 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
 
 
 module.exports = app;
