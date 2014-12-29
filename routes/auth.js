@@ -23,10 +23,10 @@ passport.deserializeUser(function(obj, done) {
 
 
 passport.use(new SteamStrategy({
-    //returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
-    //realm: 'http://steamshuffle.herokuapp.com',
-    returnURL:'http://localhost:3000/auth/steam/return',
-    realm: 'http://localhost:3000',
+    returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
+    realm: 'http://steamshuffle.herokuapp.com',
+    // returnURL:'http://localhost:3000/auth/steam/return',
+    // realm: 'http://localhost:3000',
     apiKey: process.env.API_KEY
     },
 
