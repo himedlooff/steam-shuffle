@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/', function(req, res){
-	res.render('login', { user: req.user });
+	res.redirect('/auth/steam');
+	//	res.render('login', { user: req.user });
 });
 
 

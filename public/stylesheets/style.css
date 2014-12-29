@@ -4,5 +4,9 @@ img.icon {
 }
 
 span.shuffle {
-	letter-spacing: 5px;
+	letter-spacing: 3px;
+}
+
+a, a:hover, a:focus, a:link, a:visited {
+	text-decoration: none;
 }

@@ -4,8 +4,6 @@ var router = express.Router();
 
 /* GET users games. */
 router.get('/', ensureAuthenticated, function(req, res){
-
-
 	    function renderGames (err, gamesData) {
 	    	if(err) return console.error(err);
 	    	getRnd(gamesData);
@@ -24,7 +22,6 @@ router.get('/', ensureAuthenticated, function(req, res){
         	selected = Math.floor( Math.random() * total );
         	return selected;
 		}
-
 });
 
 

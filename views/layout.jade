@@ -16,9 +16,7 @@ html(lang='en')
 						button(type='button', class='navbar-toggle collapsed', data-toggle='collapse')
 							span.sr-only
 								|Steam Shuffle
-							span.icon-bar
-							span.icon-bar
-							span.icon-bar
+							i.fa.fa-bars
 						a.navbar-brand(href='/')
 							span.glyphicon.glyphicon-random
 							|&nbsp Steam Shuffle
@@ -27,9 +25,13 @@ html(lang='en')
 							li
 								a(href='/about')
 									|About
-							li
-								a(href='/games')
-									|Games
+							if(user)
+								li
+									a(href='/shuffle')
+										|Shuffle
+								li
+									a(href='/games')
+										|Games
 						ul.nav.navbar-nav.navbar-right
 							li.dropdown
 								if (!user)
@@ -42,16 +44,20 @@ html(lang='en')
 										span.caret
 									ul.dropdown-menu(role="menu")
 										li
-											a(href="account")
-												span.glyphicon.glyphicon-user
+											a(href="/account")
+												i.fa.fa-user
 												|&nbsp Account
 										li
-											a(href="games")
-												span.glyphicon.glyphicon-list
+											a(href="/games")
+												i.fa.fa-list
 												|&nbsp Games
 										li
+											a(href="/shuffle")
+												i.fa.fa-random
+												|&nbsp Shuffle
+										li
 											a(href="/logout")
-												span.glyphicon.glyphicon-log-out
+												i.fa.fa-sign-out
 												|&nbsp Logout
 		block content
 		script(src='/javascripts/jquery-1.11.1.min.js')

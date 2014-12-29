@@ -61,8 +61,19 @@ app.use('/shuffle', shuffle);
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
+   next(err);
+});
+
+app.use(function(err, req, res, next){
+    if (err.message.code === 'ETIMEDOUT'){
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    };
     next(err);
 });
+
 
 // error handlers
 

@@ -27,16 +27,16 @@ passport.use(new SteamStrategy({
     //realm: 'http://steamshuffle.herokuapp.com',
     returnURL:'http://localhost:3000/auth/steam/return',
     realm: 'http://localhost:3000',
-
     apiKey: process.env.API_KEY
     },
+
     function(identifier, profile, done){
         process.nextTick(function(){
             profile.identifier = identifier;
             return done(null, profile);
         });
     }
-    ));
+));
 
 // GET /auth/steam
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -44,9 +44,10 @@ passport.use(new SteamStrategy({
 //   the user to steam.com.  After authenticating, Steam will redirect the
 //   user back to this application at /auth/steam/return
 router.get('/',
-	passport.authenticate('steam', { failureRedirect: '/auth/steam' }),
+	passport.authenticate('steam', { failureRedirect: '/'}),
 	function(req, res) {
 		res.redirect('/');
+		console.log("STEAM IN");
   });
 
 // GET /auth/steam/return
@@ -55,14 +56,12 @@ router.get('/',
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 router.get('/return',
-	passport.authenticate('steam', { failureRedirect: '/auth/steam' }),
+	passport.authenticate('steam', { failureRedirect: '/' }),
 	function(req, res) {
-
-	Steam.ready( function(err) {
-	    if (err) return console.log(err);
-	    var steam = new Steam();
-	    steam.key = process.env.API_KEY;
-	    
+		Steam.ready(function(err) {
+		    if (err) return console.log(err);
+		    var steam = new Steam();
+		    steam.key = process.env.API_KEY;
 	    // function renderGames (err, gamesData) {
 	    // 	if(err) return console.error(err);
 	    // 	res.render('games', { result : JSON.stringify(gamesData), user: req.user});
@@ -73,24 +72,23 @@ router.get('/return',
 	    // 	return;
 	    // }
 
-	    var data = {
-	        key: process.env.API_KEY,
-	        steamid : req.user._json.steamid,
-	        // include_appinfo : true,
-	        // include_played_free_games :true,
-	        include_appinfo : true,
-	        include_played_free_games : true,
-	        appids_filter : ""
-	        //appids_filter: [ 570, 500, 550 ]
-	    };
+		    var data = {
+		        key: process.env.API_KEY,
+		        steamid : req.user._json.steamid,
+		        // include_appinfo : true,
+		        // include_played_free_games :true,
+		        include_appinfo : true,
+		        include_played_free_games : true,
+		        appids_filter : ""
+		    };
 
-	    steam.getOwnedGames(data, function (err, result) {
-	    	req.session.games = !err ? result : null;
-	    	addStringTime(req.session.games);
-	    	console.log("-----------------------------------------");
-	    	console.log("Saving game in session.");
-	    	res.redirect('/');
-	    });
+		    steam.getOwnedGames(data, function (err, result) {
+		    	req.session.games = !err ? result : null;
+		    	addStringTime(req.session.games);
+		    	console.log("Saving game in session.");
+		    	res.redirect('/');
+		    	
+		    });
 	});
 
 	
