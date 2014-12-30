@@ -3,7 +3,7 @@ var router = express.Router();
 
 
 router.get('/', ensureAuthenticated, function(req, res){
-	res.render('account', { user: req.user });
+	res.render('account', {  result : JSON.stringify(req.session.games), user: req.user });
 });
 
 function ensureAuthenticated(req, res, next) {

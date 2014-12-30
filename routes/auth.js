@@ -23,10 +23,10 @@ passport.deserializeUser(function(obj, done) {
 
 
 passport.use(new SteamStrategy({
-    returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
-    realm: 'http://steamshuffle.herokuapp.com',
-    // returnURL:'http://localhost:3000/auth/steam/return',
-    // realm: 'http://localhost:3000',
+    // returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
+    // realm: 'http://steamshuffle.herokuapp.com',
+    returnURL:'http://localhost:3000/auth/steam/return',
+    realm: 'http://localhost:3000',
     apiKey: process.env.API_KEY
     },
 
@@ -62,16 +62,7 @@ router.get('/return',
 		    if (err) return console.log(err);
 		    var steam = new Steam();
 		    steam.key = process.env.API_KEY;
-	    // function renderGames (err, gamesData) {
-	    // 	if(err) return console.error(err);
-	    // 	res.render('games', { result : JSON.stringify(gamesData), user: req.user});
-	    // }
-
-	    // if(req.session.games) {
-	    // 	// renderGames(null, req.session.games);
-	    // 	return;
-	    // }
-
+		    
 		    var data = {
 		        key: process.env.API_KEY,
 		        steamid : req.user._json.steamid,
@@ -84,36 +75,10 @@ router.get('/return',
 
 		    steam.getOwnedGames(data, function (err, result) {
 		    	req.session.games = !err ? result : null;
-		    	addStringTime(req.session.games);
 		    	console.log("Saving game in session.");
 		    	res.redirect('/');
-		    	
 		    });
 	});
-
-	
-	function stringTime(minutes){
-		var time ="";
-		var d =  Math.floor (minutes / 1440);
-		var h = Math.floor ((minutes - d * 1440) / 60);
-		var m = minutes - (d * 1440) - (h * 60);
-
-		h = h? String(h) + " hours " : "";
-		d = d? String(d) + " days " : "";
-		m = m ? String(m) + " minutes" : "";
-
-		return d + h +  m ;
-	}
-
-	function addStringTime(result){
-		var result_array = result.games;
-		var result_length = result_array.length;
-
-		for(var i=0 ; i< result_length; i++){
-			result_array[i].sum_2weeks = stringTime(result_array[i].playtime_2weeks);
-		    result_array[i].sum_forever = stringTime(result_array[i].playtime_forever);
-		}
-	}
   });
 
 module.exports = router;

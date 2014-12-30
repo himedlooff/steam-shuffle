@@ -10,3 +10,6 @@ span.shuffle {
 a, a:hover, a:focus, a:link, a:visited {
 	text-decoration: none;
 }
+
+td:empty{
+}
