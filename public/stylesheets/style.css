@@ -13,3 +13,7 @@ a, a:hover, a:focus, a:link, a:visited {
 
 td:empty{
 }
+
+#index{
+	background: url('/images/steamsale.jpg') no-repeat center center fixed;
+}

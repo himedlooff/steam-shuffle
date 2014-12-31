@@ -23,10 +23,10 @@ passport.deserializeUser(function(obj, done) {
 
 
 passport.use(new SteamStrategy({
-    // returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
-    // realm: 'http://steamshuffle.herokuapp.com',
-    returnURL:'http://localhost:3000/auth/steam/return',
-    realm: 'http://localhost:3000',
+    returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
+    realm: 'http://steamshuffle.herokuapp.com',
+    // returnURL:'http://localhost:3000/auth/steam/return',
+    // realm: 'http://localhost:3000',
     apiKey: process.env.API_KEY
     },
 
@@ -55,6 +55,7 @@ router.get('/',
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
+
 router.get('/return',
 	passport.authenticate('steam', { failureRedirect: '/' }),
 	function(req, res) {
@@ -76,9 +77,11 @@ router.get('/return',
 		    steam.getOwnedGames(data, function (err, result) {
 		    	req.session.games = !err ? result : null;
 		    	console.log("Saving game in session.");
-		    	res.redirect('/');
+		    	res.redirect('back');
 		    });
 	});
+
+
   });
 
 module.exports = router;

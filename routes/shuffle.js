@@ -19,8 +19,6 @@ router.get('/', function(req, res){
 
 router.post('/', function(req, res){
 	var rnd = getRnd(req.session.games);
-	console.log("RND");
-	console.log(rnd);
 	res.render('shuffle', {result : JSON.stringify(req.session.games), user : req.user, rnd: rnd});
 	//res.redirect('/shuffle');
 	function getRnd(gamesData){
