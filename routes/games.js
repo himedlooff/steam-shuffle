@@ -3,7 +3,7 @@ var Steam = require('steam-webapi');
 var router = express.Router();
 
 /* GET users games. */
-router.get('/', ensureAuthenticated, function(req, res){
+router.get('/' , function(req, res){
 	    
 	    function renderGames (err, gamesData) {
 	    	if(err) return console.error(err);
@@ -36,10 +36,5 @@ function favGame(lib){
     return max_i;
 }
 
-
-function ensureAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) { return next(); }
-	res.redirect('/auth/steam')
-}
 
 module.exports = router;

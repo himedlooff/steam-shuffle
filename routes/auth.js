@@ -23,10 +23,10 @@ passport.deserializeUser(function(obj, done) {
 
 
 passport.use(new SteamStrategy({
-    returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
-    realm: 'http://steamshuffle.herokuapp.com',
-    // returnURL:'http://localhost:3000/auth/steam/return',
-    // realm: 'http://localhost:3000',
+    // returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
+    // realm: 'http://steamshuffle.herokuapp.com',
+    returnURL:'http://localhost:3000/auth/steam/return',
+    realm: 'http://localhost:3000',
     apiKey: process.env.API_KEY
     },
 
@@ -47,7 +47,6 @@ router.get('/',
 	passport.authenticate('steam', { failureRedirect: '/'}),
 	function(req, res) {
 		res.redirect('/');
-		console.log("STEAM IN");
   });
 
 // GET /auth/steam/return
@@ -59,6 +58,8 @@ router.get('/',
 router.get('/return',
 	passport.authenticate('steam', { failureRedirect: '/' }),
 	function(req, res) {
+		console.log("hostname " + req.hostname);
+		console.log("url" + req.url);
 		Steam.ready(function(err) {
 		    if (err) return console.log(err);
 		    var steam = new Steam();

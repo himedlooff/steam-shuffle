@@ -1,5 +1,4 @@
 var text = $("#shuffle").html();
-//shuffle(text);
 
 function shuffle(word){
 	var len = word.len, i = 0;
@@ -8,4 +7,3 @@ function shuffle(word){
 	}
 
 }
-console.log(text);

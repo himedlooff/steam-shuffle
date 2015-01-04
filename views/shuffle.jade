@@ -25,11 +25,15 @@ block content
 						br
 						h4
 							|!{lib.games[random].name}
-						
 						h4
 							a(href="steam://run/#{lib.games[random].appid}")
 								i.fa.fa-play 
 								|&nbsp play
+								br
+						a(href="http://store.steampowered.com/app/#{lib.games[random].appid}/")
+							|See on steam &nbsp
+							i.fa.fa-steam
+							br
 						if (!lib.games[random].playtime_forever)
 							|You've never played this game &nbsp
 							i.fa.fa-download

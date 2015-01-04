@@ -1,11 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-
 router.get('/', function(req, res){
 	var rnd = getRnd(req.session.games);
-	console.log("RND");
-	console.log(rnd);
 	res.render('shuffle', {result : JSON.stringify(req.session.games), user : req.user, rnd: rnd});
 	//res.redirect('/shuffle');
 	function getRnd(gamesData){
@@ -28,10 +25,5 @@ router.post('/', function(req, res){
     	return selected;
 	};
 });
-
-function ensureAuthenticated(req, res, next) {
-	if (req.isAuthenticated()) { return next(); }
-	res.redirect('/auth/steam')
-}
 
 module.exports = router;
