@@ -71,8 +71,8 @@ module.exports= function(app){
 
 		var OpenIDurl, OpenIDrealm;
 		if (app.locals.hostnames.indexOf(req.hostname) > -1) {
-			  	OpenIDurl = 'http://' + req.hostname +":"+ app.locals.port + '/auth/steam/return';
-			    OpenIDrealm = 'http://' + req.hostname + ":"+app.locals.port;
+			  	OpenIDurl = 'http://' + req.hostname + '/auth/steam/return';
+			    OpenIDrealm = 'http://' + req.hostname;
 	  	}
 	  	else {
 		   		 OpenIDurl = 'http://localhost:3000/auth/steam/return';
