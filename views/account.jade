@@ -2,25 +2,13 @@ extends layout
 block content
 	.container
 		.well.text-center
-			if (user)
-				- var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
+			if (user_loc)
 				h3
-					|!{user.displayName} &nbsp
-					a(href="#{user._json.profileurl}", style="color: white")
+					|!{user_loc.displayName} &nbsp
+					a(href="#{user_json.profileurl}", style="color: white")
 						i.fa.fa-steam-square
-					//- 	|&nbsp  
-					//- if (user._json.communityvisibilitystate == 1)		
-					//- 		span.label.label-danger
-					//- 			|private
-					//- else 
-					//- 	if (user._json.personastate == 1)
-					//- 		span.label.label-success
-					//- 			|online
-					//- 	if (user._json.personastate == 0)
-					//- 		span.label.label-default
-					//- 			|offline
-				if (result)
+				if (steamGames)
 					p
-						| Your have 
+						|Your have 
 						a(href="/games")
-							|!{lib.game_count} games.
+							|!{steamGames.game_count} games.

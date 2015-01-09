@@ -1,9 +1,12 @@
+//- var lib = typeof(steamGames) != 'undefined' ? JSON.parse(result) : { }
+//- var random = typeof(rnd) != 'undefined' ? rnd : -1
+
 extends layout
 
 block content
 	.container
 		.well.text-center
-			if (!user)
+			if (!user_loc)
 				h3
 					|Welcome to Steam Shuffle!
 				p
@@ -12,7 +15,7 @@ block content
 						|Steam Sale Syndrome 
 					|there is a simple solution
 				h3
-					a(href="/login")
+					a(href="/auth/steam")
 						i.fa.fa-sign-in
 						|&nbsp Login 
 					br
@@ -26,15 +29,13 @@ block content
 					i.fa.fa-play
 					|&nbsp Play
 			else
-				- var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
-				- var random = typeof(rnd) != 'undefined' ? rnd : -1
 				h3
-					|Heyo !{user.displayName} !
-				if (result)
+					|Heyo !{user_loc.displayName} !
+				if (steamGames)
 					p
 						|Wow... 
 						a(href="/games")
-							|!{lib.game_count} games, eh?
+							|!{steamGames.game_count} games, eh?
 					p
 						|So you went crazy on the couple steam sales? 
 					p
@@ -43,7 +44,6 @@ block content
 							|shuffle!
 					p
 						|Enjoy steam-sale-guiltless life!
-					//- if (random==-1)
 					a(href="/shuffle")
 						button(type="button", class="btn btn-info")
 							i.fa.fa-random

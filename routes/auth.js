@@ -1,5 +1,3 @@
-var express = require('express');
-var router = express.Router();
 var passport = require('passport'),
   	SteamStrategy = require('./../node_modules/passport-steam/lib/passport-steam').Strategy;
 var Steam = require('steam-webapi');
@@ -13,41 +11,20 @@ var Steam = require('steam-webapi');
 //   have a database of user records, the complete Steam profile is serialized
 //   and deserialized.
 
-passport.serializeUser(function(user, done) {
-	done(null, user);
-});
 
-passport.deserializeUser(function(obj, done) {
-	done(null, obj);
-});
-
-
-passport.use(new SteamStrategy({
-    // returnURL:'http://steamshuffle.herokuapp.com/auth/steam/return',
-    // realm: 'http://steamshuffle.herokuapp.com',
-    returnURL:'http://localhost:3000/auth/steam/return',
-    realm: 'http://localhost:3000',
-    apiKey: process.env.API_KEY
-    },
-
-    function(identifier, profile, done){
-        process.nextTick(function(){
-            profile.identifier = identifier;
-            return done(null, profile);
-        });
-    }
-));
 
 // GET /auth/steam
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  The first step in Steam authentication will involve redirecting
 //   the user to steam.com.  After authenticating, Steam will redirect the
 //   user back to this application at /auth/steam/return
-router.get('/',
-	passport.authenticate('steam', { failureRedirect: '/'}),
-	function(req, res) {
+exports.steam = function(req, res){
+	//function(req, res) {
 		res.redirect('/');
-  });
+	//}
+};
+
+
 
 // GET /auth/steam/return
 //   Use passport.authenticate() as route middleware to authenticate the
@@ -55,34 +32,58 @@ router.get('/',
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
 
-router.get('/return',
-	passport.authenticate('steam', { failureRedirect: '/' }),
-	function(req, res) {
-		console.log("hostname " + req.hostname);
-		console.log("url" + req.url);
-		Steam.ready(function(err) {
-		    if (err) return console.log(err);
-		    var steam = new Steam();
-		    steam.key = process.env.API_KEY;
+exports.return = function(req, res){
+	 	Steam.ready(function(err) {
+	 	    if (err) return console.log(err);
+	 	    var steam = new Steam();
+	 	    steam.key = process.env.API_KEY;
 		    
-		    var data = {
-		        key: process.env.API_KEY,
-		        steamid : req.user._json.steamid,
-		        // include_appinfo : true,
-		        // include_played_free_games :true,
+	 	    var data = {
+	 	        key: process.env.API_KEY,
+	 	        steamid : req.user._json.steamid,
 		        include_appinfo : true,
 		        include_played_free_games : true,
 		        appids_filter : ""
 		    };
 
-		    steam.getOwnedGames(data, function (err, result) {
-		    	req.session.games = !err ? result : null;
-		    	console.log("Saving game in session.");
-		    	res.redirect('back');
-		    });
-	});
+		    steam.getOwnedGames(data, 
+		    	function (err, result) {
+			    	req.session.steamGames = !err ? result : null;
+			    	console.log("Saving game in session.");
+			    	req.session.favGame = favGame(result);
+			    	res.redirect("/");
+			});
+		});
+
+};
+
+exports.login = function(req, res){
+	res.redirect('/auth/steam');
+	//	res.render('login');
+};
+
+exports.logout = function(req, res){
+	req.session.destroy(function(err) {
+	  		if (err) return console.log(err);
+		});
+	req.logout();
+	res.redirect('/');
+};
+
+exports.account = function(req, res){
+	res.render('account');
+};
 
 
-  });
-
-module.exports = router;
+function favGame(lib){
+	if(!lib || lib.game_count === 0) return null;
+    var max_time = 0, max_i = 0, i = 0, len = lib.game_count;
+    for (; i != len; ++i) {
+        if (lib.games[i].playtime_forever > max_time) {
+            max_time = lib.games[i].playtime_forever;
+            max_i = i;
+        }
+    }
+    console.log("Your favourite game is " + lib.games[max_i].name);
+    return max_i;
+}

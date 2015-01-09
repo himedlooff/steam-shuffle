@@ -2,11 +2,8 @@ extends layout
 
 block content
 	.container
-		if (user)
-			- var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
-			- var random = typeof(rnd) != ('undefined' || null) ? rnd : -1
-			br
-			if (result)
+		if (user_loc)
+			if (steamGames.game_count != 0 )
 				if (random==-1)
 					form(action="/shuffle", method="post")
 						input(type="submit", class="btn btn-default", value="Shuffle")
@@ -18,23 +15,23 @@ block content
 						h3
 							|Play more games!							
 						br
-						if lib.games[random].img_logo_url
-							img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{lib.games[random].appid}/#{lib.games[random].img_logo_url}.jpg")
+						if steamGames.games[random].img_logo_url
+							img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{steamGames.games[random].appid}/#{steamGames.games[random].img_logo_url}.jpg")
 						else
 							i.fa.fa-steam.fa-5x
 						br
 						h4
-							|!{lib.games[random].name}
+							|!{steamGames.games[random].name}
 						h4
-							a(href="steam://run/#{lib.games[random].appid}")
+							a(href="steam://run/#{steamGames.games[random].appid}")
 								i.fa.fa-play 
 								|&nbsp play
 								br
-						a(href="http://store.steampowered.com/app/#{lib.games[random].appid}/")
+						a(href="http://store.steampowered.com/app/#{steamGames.games[random].appid}/")
 							|See on steam &nbsp
 							i.fa.fa-steam
 							br
-						if (!lib.games[random].playtime_forever)
+						if (!steamGames.games[random].playtime_forever)
 							|You've never played this game &nbsp
 							i.fa.fa-download
 							br
@@ -42,21 +39,25 @@ block content
 						//- br
 						//- i.fa.fa-history
 						//- |&nbsp last 2 weeks &nbsp
-						//- if lib.games[random].playtime_2weeks
-						//- 	//- != lib.games[random].playtime_2weeks
-						//- 	|!= lib.games[random].sum_2weeks
+						//- if steamGames.games[random].playtime_2weeks
+						//- 	//- != steamGames.games[random].playtime_2weeks
+						//- 	|!= steamGames.games[random].sum_2weeks
 						//- else
 						//- 	| 0 minutes
 						//- br
 						//- i.fa.fa-clock-o
 						//- |&nbsp since forever &nbsp
-						//- if lib.games[random].playtime_forever
-						//- 	//- != lib.games[random].playtime_forever
-						//- 	!= lib.games[random].sum_forever
+						//- if steamGames.games[random].playtime_forever
+						//- 	//- != steamGames.games[random].playtime_forever
+						//- 	!= steamGames.games[random].sum_forever
 						//- else
 						//- 	| 0 minutes
-						//-|Your game for today : !{lib.games[random].name}
+						//-|Your game for today : !{steamGames.games[random].name}
 						form(action="/shuffle", method="post")
 							button(type="submit", class="btn btn-info")
 								i.fa.fa-random
 								|&nbsp re-shuffle
+			else
+				.well
+					i.fa.fa-frown-o.fa-2x
+					| &nbsp You have no games

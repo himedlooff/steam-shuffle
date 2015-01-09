@@ -1,89 +1,87 @@
 extends layout
-
 block content
-	//- - var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
-	- var lib = typeof(result) != 'undefined' ? result : { }
-	- var game = JSON.stringify(JSON.parse(result).games);
-	- var random = typeof(rnd) != 'undefined' ? rnd : 0;
 	.container
-		//- h1
-		//-|Game count !{lib.game_count}
-		//- h1
-		//- 	|Your game for today : !{lib.games[random].name}
-		table.table.table-hover.table-condensed(id="games", data-toggle="table", data-sort-name="playtime_2weeks", data-sort-order="desc", data-search="true")
-			thead
-				tr
-					th(class="col-sm-3",data-field="name", data-sortable="true", data-formatter="thumb", data-align="left", data-searchable="true")
-						i.fa.fa-steam
-						|&nbsp game
-					th(class="col-sm-3", data-field="playtime_2weeks", data-sortable="true", data-formatter="time2words", data-align="left", data-searchable="false")
-						i.fa.fa-history
-						|&nbsp two weeks
-					th(class="col-sm-3",data-field="playtime_forever", data-sortable="true", data-formatter="time2words", data-align="left", data-searchable="false")
-						i.fa.fa-clock-o
-						|&nbsp forever
-					th(class="col-sm-1", data-field="appid", data-formatter="run", data-align="left", data-searchable="false")
-						i.fa.fa-play.fa
-						|&nbsp play
+		if(steamGames.game_count != 0)
+			table.table.table-hover.table-condensed(id="games", data-toggle="table", data-sort-name="playtime_2weeks", data-sort-order="desc", data-search="true")
+				thead
+					tr
+						th(class="col-sm-3",data-field="name", data-sortable="true", data-formatter="thumb", data-align="left", data-searchable="true")
+							i.fa.fa-steam
+							|&nbsp game
+						th(class="col-sm-3", data-field="playtime_2weeks", data-sortable="true", data-formatter="time2words", data-align="left", data-searchable="false")
+							i.fa.fa-history
+							|&nbsp two weeks
+						th(class="col-sm-3",data-field="playtime_forever", data-sortable="true", data-formatter="time2words", data-align="left", data-searchable="false")
+							i.fa.fa-clock-o
+							|&nbsp forever
+						th(class="col-sm-1", data-field="appid", data-formatter="run", data-align="left", data-searchable="false")
+							i.fa.fa-play.fa
+							|&nbsp play
+		else
+			.well
+				i.fa.fa-frown-o.fa-2x
+				| &nbsp You have no games
+if(steamGames.game_count != 0)
+	block script
+		script(type="text/javascript").
+			console.log(!{steamGames.game_count});
 
-block script
-	script.
-		$('#games').bootstrapTable({data:!{game}});
+			$('#games').bootstrapTable({
+				data:!{lib}
+				});
 
-		function thumb(value, row){
-			var name = value + "<br>";
-			if (!row.img_logo_url){
-				return name + "<i class='fa fa-steam fa-4x'>";
+			function thumb(value, row){
+				var name = value + "<br>";
+				if (!row.img_logo_url){
+					return name + "<i class='fa fa-steam fa-4x'>";
+				}
+				var img = "<img src="+"http://media.steampowered.com/steamcommunity/public/images/apps/"+row.appid+"/"+row.img_logo_url+".jpg>";
+				
+				var steam = "<a href='"+ "http://store.steampowered.com/app/" + row.appid +  "'>" + name + img +"</a>"
+				return steam;
 			}
-			var img = "<img src="+"http://media.steampowered.com/steamcommunity/public/images/apps/"+row.appid+"/"+row.img_logo_url+".jpg>";
-			
-			var steam = "<a href='"+ "http://store.steampowered.com/app/" + row.appid +  "'>" + name + img +"</a>"
-			return steam;
-		}
 
-		function run(value){
-			var run = "<a href="+'steam://run/'+value+">"+"<i class='fa fa-play fa-2x'>"+"</a>";
-			return run;
-		}
+			function run(value){
+				var run = "<a href="+'steam://run/'+value+">"+"<i class='fa fa-play fa-2x'>"+"</a>";
+				return run;
+			}
 
-		function time2words(value){
-			if (typeof(value) == 'undefined' || 0){
-				return "";
-				} 
-			else{
-				var d =  Math.floor (value / 1440);
+			function time2words(value){
+				if (typeof(value) == 'undefined' || 0){
+					return "";
+					} 
+				else{
+					var d =  Math.floor (value / 1440);
 
-				var h = Math.floor ((value - d * 1440) / 60);
+					var h = Math.floor ((value - d * 1440) / 60);
 
-				var m = value - (d * 1440) - (h * 60);
+					var m = value - (d * 1440) - (h * 60);
 
-				if (d!=0) {
-					if  (d == 1) {
-						d = String(d) + " day ";
-						}
-					else 
-						d = String(d) + " days ";
-				}
-				else
-					d="";
-
-				if (h!=0) {
-					if  (h == 1) {
-						h = String(h) + " hour ";
-						}
+					if (d!=0) {
+						if  (d == 1) {
+							d = String(d) + " day ";
+							}
+						else 
+							d = String(d) + " days ";
+					}
 					else
-						h = String(h) + " hours ";
-				}
-				else h = "";
-
-				if (m!=0) {
-					if  (m == 1) {
-						m = String(m) + " minute";
-						}
-					else 
-						m = String(m) + " minutes";
-				}
-				else m = "";
-				return d + h +  m ;
-				}
-		}
+						d="";
+					if (h!=0) {
+						if  (h == 1) {
+							h = String(h) + " hour ";
+							}
+						else
+							h = String(h) + " hours ";
+					}
+					else h = "";
+					if (m!=0) {
+						if  (m == 1) {
+							m = String(m) + " minute";
+							}
+						else 
+							m = String(m) + " minutes";
+					}
+					else m = "";
+					return d + h +  m ;
+					}
+			}

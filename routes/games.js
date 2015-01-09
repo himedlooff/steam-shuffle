@@ -1,40 +1,31 @@
-var express = require('express');
 var Steam = require('steam-webapi');
-var router = express.Router();
 
-/* GET users games. */
-router.get('/' , function(req, res){
-	    
-	    function renderGames (err, gamesData) {
-	    	if(err) return console.error(err);
-	    	favGame(req.session.games);
-	    	res.render('games', { result : JSON.stringify(gamesData), user: req.user});
-	    }
-
-	    if(req.session.games) {
-	    	renderGames(null, req.session.games);
-	    	return;
-	    }
-
-	 //    function getRnd(gamesData){
-	 //  		var total = gamesData.game_count,
-  //       	selected = Math.floor( Math.random() * total );
-  //       	return selected;
-		// }
-});
-
-
-function favGame(lib){
-    var max_time = 0, max_i = 0, i = 0, len = lib.games.length;
-    for (; i != len; ++i) {
-        if (lib.games[i].playtime_forever > max_time) {
-            max_time = lib.games[i].playtime_forever;
-            max_i = i;
-        }
+exports.show = function(req, res){
+	console.log(res.locals.steamGames.game_count);
+	
+	function renderGames (err, gamesJSON) {
+    	if(err) return console.error(err);
+    	//favGame(req.session.games);
+    	res.render('games', { lib : gamesJSON});
     }
-    console.log("Your favourite game is " + lib.games[max_i].name);
-    return max_i;
-}
+
+    if(res.locals.steamGames || res.locals.steamGames.game_count != 0) {
+    	renderGames(null, JSON.stringify(res.locals.steamGames.games));
+    	return;
+    }
+};
 
 
-module.exports = router;
+exports.shuffle = function(req, res){
+	function renderShuffle(err, shuffle){
+		if (err) return console.log(err);
+			res.render('shuffle', {random: shuffle});
+		};		
+
+		if (res.locals.steamGames){	
+			var selected = (res.locals.steamGames.game_count !=0) ? Math.floor( Math.random() * res.locals.steamGames.game_count ) : -1;
+			renderShuffle(null, selected);
+			console.log(selected);
+			return;
+		};
+	};
