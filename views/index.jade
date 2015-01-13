@@ -122,23 +122,23 @@ block content
 						span(id="shuffle")
 							|shuffle!
 
-					//- 200 AND MORE
-					//- if (steamGames.game_count > 200  && steamGames.game_count <= 500)
-					//- 	p
-					//- 		|Well...
-					//- 		a(href="/games")
-					//- 			|&nbsp !{steamGames.game_count} games
-					//- 	p
-					//- 		|This is how a severe case of 
-					//- 		b
-					//- 			a(href="/about")
-					//- 				|Steam Sale Syndrome 
-					//- 		|looks like.
-					//- 	p
-					//- 		|Use this button. It will make you feel better...
-					//- 		span.not-really
-					//- 			|&nbsp (not really)
-					//- 500 AND MORE
+					200 AND MORE
+					if (steamGames.game_count > 200  && steamGames.game_count <= 500)
+						p
+							|Well...
+							a(href="/games")
+								|&nbsp !{steamGames.game_count} games
+						p
+							|This is how a severe case of 
+							b
+								a(href="/about")
+									|Steam Sale Syndrome 
+							|looks like.
+						p
+							|Use this button. It will make you feel better...
+							span.not-really
+								|&nbsp (not really)
+					500 AND MORE
 					if (steamGames.game_count > 500  && steamGames.game_count <= 1000)
 						p
 							|Daily Deal
