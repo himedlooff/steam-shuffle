@@ -15,10 +15,11 @@ block content
 						h3
 							|Play more games!							
 						br
-						if steamGames.games[random].img_logo_url
-							img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{steamGames.games[random].appid}/#{steamGames.games[random].img_logo_url}.jpg")
-						else
-							i.fa.fa-steam.fa-5x
+						a(href="http://store.steampowered.com/app/#{steamGames.games[random].appid}/", alt="See on steam", title="See on steam")
+							if steamGames.games[random].img_logo_url
+								img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{steamGames.games[random].appid}/#{steamGames.games[random].img_logo_url}.jpg")
+							else
+								i.fa.fa-steam.fa-5x
 						br
 						h4
 							|!{steamGames.games[random].name}
@@ -26,16 +27,14 @@ block content
 							a(href="steam://run/#{steamGames.games[random].appid}")
 								i.fa.fa-play 
 								|&nbsp play
-								br
-						a(href="http://store.steampowered.com/app/#{steamGames.games[random].appid}/")
-							|See on steam &nbsp
-							i.fa.fa-steam
 							br
 						if (!steamGames.games[random].playtime_forever)
 							|You've never played this game &nbsp
 							i.fa.fa-download
 							br
+						else
 							br
+						br
 						//- br
 						//- i.fa.fa-history
 						//- |&nbsp last 2 weeks &nbsp

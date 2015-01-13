@@ -32,56 +32,157 @@ block content
 				h3
 					|Heyo !{user_loc.displayName} !
 				if (steamGames)
-					p
-						|Wow... 
-						a(href="/games")
-							|!{steamGames.game_count} games, eh?
-					p
-						|So you went crazy on the couple steam sales? 
-					p
-						|Don’t waste hours trying to pick something you’d enjoy and leave that to the power of the 
+					//- p
+					//- 	|Wow... 
+					//- 	a(href="/games")
+					//- 		|!{steamGames.game_count} games, eh?
+					//- p
+					//- 	|So you went crazy on the couple steam sales? 
+					//- p
+					//- 	|Don’t waste hours trying to pick something you’d enjoy and leave that to the power of the 
+					//- 	span(id="shuffle")
+					//- 		|shuffle!
+					//- p
+					//- 	|Enjoy steam-sale-guiltless life!
+					//- a(href="/shuffle")
+					//- 	button(type="button", class="btn btn-info")
+					//- 		i.fa.fa-random
+					//- 		|&nbsp Shuffle!
+					//- NO GAMES
+					if (steamGames.game_count == 0)
+						p
+							|You have no games. What are you doing here?
+							
+						p
+							|You should check some 
+							a(href="http://store.steampowered.com/genre/Free%20to%20Play/")
+								|Free to Play 
+							|games on steam and come back.
+					
+					//- ONE GAME
+					if (steamGames.game_count == 1)
+						p
+							|You have O N E game... What are you doing here?
+						p
+							|Just go 
+							a(href="steam://run/"+steamGames.games[0].appid)
+								|play !{steamGames.games[0].name}.
+						p
+							|Or you can check some 
+							a(href="http://store.steampowered.com/genre/Free%20to%20Play/")
+								|Free to Play 
+							|games on steam.
+					
+					//- 10 OR LESS GAMES
+					if (steamGames.game_count > 1 && steamGames.game_count <= 10)
+						p
+							|Well, 
+							a(href="/games")
+								|!{steamGames.game_count} games.
+						p
+							|Maybe you should rather flip the coin? Sounds like a better idea.
+						p
+							|But since you're here you can just shuffle... It's a lot like flipping a coin.
+						
+					//- 10 AND MORE GAMES			
+					if (steamGames.game_count > 10  && steamGames.game_count <= 50)
+						p
+							|I see you you know what Steam Sale is but, you're doing it wrong.
+						p
+							|Try to go crazy next time. And for now...
+						p
+							|I will just leave the button here... Help yourself.
+
+					//- 50 AND MORE
+					if (steamGames.game_count > 50  && steamGames.game_count <= 100)			
+						p
+							a(href="/games")
+								|!{steamGames.game_count} games.
+						p
+							|This is how 
+							b
+								a(href="/about")
+									|Steam Sale Syndrome 
+							|is starting. 
+						p
+							|So, how many of your games haven't you even tried yet?
+						p
+							|Shuffle and see...
+
+					//- 100 AND MORE
+					if (steamGames.game_count > 100  && steamGames.game_count <= 200)
+						p
+							|Wow...
+							a(href="/games")
+								|!{steamGames.game_count} games, eh?
+						p
+							|So you went crazy on the couple steam sales?
+						p
+							|Don’t your time trying to pick something you’d enjoy and leave that to the power of the 
 						span(id="shuffle")
 							|shuffle!
-					p
-						|Enjoy steam-sale-guiltless life!
-					a(href="/shuffle")
-						button(type="button", class="btn btn-info")
-							i.fa.fa-random
-							|&nbsp Shuffle!
-					//- else
-					//- 	.well(class="text-center")
-					//- 		|Your game for today!							
-					//- 		br
-					//- 		if lib.games[random].img_logo_url
-					//- 			img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{lib.games[random].appid}/#{lib.games[random].img_logo_url}.jpg")
-					//- 		else
-					//- 			img(src="http://placehold.it/184x69")
-					//- 		br
-					//- 		|!{lib.games[random].name}
-					//- 		br
-					//- 		a(href="steam://run/#{lib.games[random].appid}")
-					//- 			i.fa.fa-play 
-					//- 			|&nbsp play	
-					//- 		br
-					//- 		i.fa.fa-history
-					//- 		|&nbsp last 2 weeks &nbsp
-					//- 		if lib.games[random].playtime_2weeks
-					//- 			//- != lib.games[random].playtime_2weeks
-					//- 			|!= lib.games[random].sum_2weeks
-					//- 		else
-					//- 			| 0 minutes
-					//- 		br
-					//- 		i.fa.fa-clock-o
-					//- 		|&nbsp since forever &nbsp
-					//- 		if lib.games[random].playtime_forever
-					//- 			//- != lib.games[random].playtime_forever
-					//- 			!= lib.games[random].sum_forever
-					//- 		else
-					//- 			| 0 minutes
-					//- 		//-|Your game for today : !{lib.games[random].name}
-					//- 		form(action="/", method="post")
-					//- 			button(type="submit", class="btn btn-default")
-					//- 				i.fa.fa-random
-					//- 				|&nbsp Shuffle!
+
+					//- 200 AND MORE
+					//- if (steamGames.game_count > 200  && steamGames.game_count <= 500)
+					//- 	p
+					//- 		|Well...
+					//- 		a(href="/games")
+					//- 			|&nbsp !{steamGames.game_count} games
+					//- 	p
+					//- 		|This is how a severe case of 
+					//- 		b
+					//- 			a(href="/about")
+					//- 				|Steam Sale Syndrome 
+					//- 		|looks like.
+					//- 	p
+					//- 		|Use this button. It will make you feel better...
+					//- 		span.not-really
+					//- 			|&nbsp (not really)
+					//- 500 AND MORE
+					if (steamGames.game_count > 500  && steamGames.game_count <= 1000)
+						p
+							|Daily Deal
+						p
+							|Midweek Madness
+						p
+							|Weeklong Sales
+						p
+							|Steam Summer  Sale
+						p
+							|Steam Autumn Sale
+						p
+							|Steam Halloween Sale
+						p
+							|and...
+						p
+							|Steam Holiday Sale
+						p 
+							|Know them all, don't you?
+						p
+							|Don't lie... I can see your &nbsp
+							a(href="/games")
+								|!{steamGames.game_count}
+							|&nbsp games.
+					//- 1000 and more
+					if (steamGames.game_count > 1000  && steamGames.game_count <= 2000)
+						p
+							|You know the feeling, right?
+						.comment-pic
+							img(src="./images/steamsale.jpg", class="img-resposive comment-pic", alt="Get rekt")
+
+					//- 2000 and more
+					//-if (steamGames.game_count > 2000)	
+					if (steamGames.game_count > 1)
+						|I think you're Gabe Newell himself...
+						.comment-pic
+							a(href="http://gaben.tv")
+								img(src="./images/gabe-steam-sale.jpg", class="img-resposive comment-pic", alt="GabeN")
+								|gaben.tv
+						
+					if (steamGames.game_count != 0 || steamGames.game_count != 1)
+						a(href="/shuffle")
+							button(type="button", class="btn btn-info")
+								i.fa.fa-random
+								|&nbsp Shuffle!
 block script
 	script(src='/javascripts/shuffle.js')

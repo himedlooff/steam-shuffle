@@ -4,7 +4,7 @@ var express = require('express'),
     passport = require('passport');
 
 
-var site = require('./routes/index'),
+var index = require('./routes/index'),
     games = require('./routes/games'),
     auth = require('./routes/auth');
 
@@ -15,8 +15,8 @@ var config = require('./config');
     config(app);
 
 // Routes
-app.get('/', site.home);
-app.get('/about', site.about);
+app.get('/', index.home);
+app.get('/about', index.about);
 app.get('/auth/steam', passport.authenticate('steam'), auth.steam);
 app.get('/auth/steam/return', passport.authenticate('steam'), auth.return)
 app.get('/login', auth.login);

@@ -7,13 +7,38 @@ span.shuffle {
 	letter-spacing: 3px;
 }
 
-a, a:hover, a:focus, a:link, a:visited {
+a, a:hover, a:focus, a:link, a:visited,
+table a:not(.btn), .table a:not(.btn)
+{
 	text-decoration: none;
 }
 
 td:empty{
 }
 
-#index{
-	background: url('/images/steamsale.jpg') no-repeat center center fixed;
+.comment-pic{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width:100%;
+	padding-bottom: 10px;
+	font-size: 0.75em;
 }
+img.comment-pic{
+	max-width:60%;
+}
+
+span.not-really{
+	opacity: 0;
+	-webkit-transition: opacity 1s ease-in-out;
+       -moz-transition: opacity 1s ease-in-out;
+        -ms-transition: opacity 1s ease-in-out;
+         -o-transition: opacity 1s ease-in-out;
+            transition: opacity 1s ease-in-out;
+}
+
+span.not-really:hover,
+span.not-really:focus{
+	opacity: 0.4;
+};
+ 	

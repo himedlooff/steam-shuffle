@@ -36,11 +36,10 @@ exports.return = function(req, res){
 	 	Steam.ready(function(err) {
 	 	    if (err) return console.log(err);
 	 	    var steam = new Steam();
-	 	    steam.key = process.env.API_KEY;
+	 	    steam.key = res.locals.api_key;
 		    
 	 	    var data = {
-	 	        key: process.env.API_KEY,
-	 	        steamid : req.user._json.steamid,
+	 	        steamid : res.locals.user_json.steamid,
 		        include_appinfo : true,
 		        include_played_free_games : true,
 		        appids_filter : ""

@@ -9,7 +9,7 @@ module.exports= function(app){
 	app.locals.secret = process.env.COOKIE_SECRET;
 	app.locals.port=  process.env.PORT || 3000;
 	app.locals.api_key = process.env.API_KEY;
-	app.locals.hostnames = ["localhost", "steamshuffle.com" , "steam-shuffle.com", "steamshuffle.herokuapp.com"];
+	app.locals.hostnames = ["steamshuffle.com" , "steam-shuffle.com", "steamshuffle.herokuapp.com"];
 
 	/***		MODULES			***/
 
@@ -51,7 +51,7 @@ module.exports= function(app){
 	    saveUninitialized: true,
 	    cookie: {
 	        secure: false, 
-	        maxAge:1000*60*60 
+	        maxAge:null
 	    }
 	}));
 
@@ -103,6 +103,10 @@ module.exports= function(app){
 	    if (req.session.passport.user) {
 	        res.locals.user_json = req.session.passport.user._json;
 	        res.locals.user_loc = req.user;
+		}
+
+		if (req.session.favGame){
+			res.locals.favGame= req.session.favGame;
 		}
   	  next();
 	 });

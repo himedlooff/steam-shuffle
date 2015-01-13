@@ -1,24 +1,35 @@
-extends index
-block sassy_comment
-			if (user)
-				- var lib = typeof(result) != 'undefined' ? JSON.parse(result) : { }
-				h3
-					|!{user.displayName} &nbsp
-					a(href="#{user._json.profileurl}", style="color: white")
-						i.fa.fa-steam-square
-					//- 	|&nbsp  
-					//- if (user._json.communityvisibilitystate == 1)		
-					//- 		span.label.label-danger
-					//- 			|private
-					//- else 
-					//- 	if (user._json.personastate == 1)
-					//- 		span.label.label-success
-					//- 			|online
-					//- 	if (user._json.personastate == 0)
-					//- 		span.label.label-default
-					//- 			|offline
-				if (result)
-					p
-						| Your have 
-						a(href="/games")
-							|!{lib.game_count} games.
+					//- else
+					//- 	.well(class="text-center")
+					//- 		|Your game for today!							
+					//- 		br
+					//- 		if lib.games[random].img_logo_url
+					//- 			img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{lib.games[random].appid}/#{lib.games[random].img_logo_url}.jpg")
+					//- 		else
+					//- 			img(src="http://placehold.it/184x69")
+					//- 		br
+					//- 		|!{lib.games[random].name}
+					//- 		br
+					//- 		a(href="steam://run/#{lib.games[random].appid}")
+					//- 			i.fa.fa-play 
+					//- 			|&nbsp play	
+					//- 		br
+					//- 		i.fa.fa-history
+					//- 		|&nbsp last 2 weeks &nbsp
+					//- 		if lib.games[random].playtime_2weeks
+					//- 			//- != lib.games[random].playtime_2weeks
+					//- 			|!= lib.games[random].sum_2weeks
+					//- 		else
+					//- 			| 0 minutes
+					//- 		br
+					//- 		i.fa.fa-clock-o
+					//- 		|&nbsp since forever &nbsp
+					//- 		if lib.games[random].playtime_forever
+					//- 			//- != lib.games[random].playtime_forever
+					//- 			!= lib.games[random].sum_forever
+					//- 		else
+					//- 			| 0 minutes
+					//- 		//-|Your game for today : !{lib.games[random].name}
+					//- 		form(action="/", method="post")
+					//- 			button(type="submit", class="btn btn-default")
+					//- 				i.fa.fa-random
+					//- 				|&nbsp Shuffle!					

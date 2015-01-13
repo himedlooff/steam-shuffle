@@ -25,7 +25,6 @@ exports.shuffle = function(req, res){
 		if (res.locals.steamGames){	
 			var selected = (res.locals.steamGames.game_count !=0) ? Math.floor( Math.random() * res.locals.steamGames.game_count ) : -1;
 			renderShuffle(null, selected);
-			console.log(selected);
 			return;
 		};
 	};
