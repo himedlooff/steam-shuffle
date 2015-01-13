@@ -39,7 +39,7 @@ exports.return = function(req, res){
 	 	    steam.key = res.locals.api_key;
 		    
 	 	    var data = {
-	 	        steamid : res.locals.user_json.steamid,
+	 	        steamid : req.user._json.steamid,
 		        include_appinfo : true,
 		        include_played_free_games : true,
 		        appids_filter : ""
