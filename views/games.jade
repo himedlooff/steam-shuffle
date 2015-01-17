@@ -24,8 +24,6 @@ block content
 if(steamGames.game_count != 0)
 	block script
 		script(type="text/javascript").
-			console.log(!{steamGames.game_count});
-
 			$('#games').bootstrapTable({
 				data:!{lib}
 				});

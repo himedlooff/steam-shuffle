@@ -57,8 +57,8 @@ exports.return = function(req, res){
 };
 
 exports.login = function(req, res){
-	res.redirect('/auth/steam');
-	//	res.render('login');
+	//res.redirect('/auth/steam');
+	res.render('login');
 };
 
 exports.logout = function(req, res){

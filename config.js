@@ -9,7 +9,7 @@ module.exports= function(app){
 	app.locals.secret = process.env.COOKIE_SECRET;
 	app.locals.port=  process.env.PORT || 3000;
 	app.locals.api_key = process.env.API_KEY;
-	app.locals.hostnames = ["steamshuffle.com" , "steam-shuffle.com", "steamshuffle.herokuapp.com"];
+	app.locals.hostnames = ["www.steamshuffle.com", "steamshuffle.com" , "www.steam-shuffle.com", "steam-shuffle.com", "steamshuffle.herokuapp.com"];
 
 	/***		MODULES			***/
 
