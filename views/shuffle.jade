@@ -26,7 +26,7 @@ block content
 						h4
 							form(class="form-horizontal", action="/shuffle", method="post")
 								fieldset
-									button(class="sweet-click btn btn-primary", data-appid="#{steamGames.games[random].appid}", data-name="#{steamGames.games[random].name}", data-playtime="#{steamGames.games[random].playtime_forever}")
+									span(class="sweet-click btn btn-primary", data-appid="#{steamGames.games[random].appid}", data-name="#{steamGames.games[random].name}", data-playtime="#{steamGames.games[random].playtime_forever}")
 										i.fa.fa-play
 										|&nbsp play	
 									button(type="submit", class="btn btn-info")
