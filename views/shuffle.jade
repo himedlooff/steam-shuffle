@@ -15,48 +15,26 @@ block content
 						h3
 							|Play more games!							
 						br
-						a(href="http://store.steampowered.com/app/#{steamGames.games[random].appid}/", alt="See on steam", title="See on steam")
+						a(href="http://store.steampowered.com/app/#{steamGames.games[random].appid}/", title="See on steam")
 							if steamGames.games[random].img_logo_url
-								img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{steamGames.games[random].appid}/#{steamGames.games[random].img_logo_url}.jpg")
+								img(src="http://media.steampowered.com/steamcommunity/public/images/apps/#{steamGames.games[random].appid}/#{steamGames.games[random].img_logo_url}.jpg", alt="See on Steam", title="See on Steam")
 							else
 								i.fa.fa-steam.fa-5x
 						br
 						h4
 							|!{steamGames.games[random].name}
 						h4
-							a(href="steam://run/#{steamGames.games[random].appid}")
-								i.fa.fa-play 
-								|&nbsp play
-							br
-						if (!steamGames.games[random].playtime_forever)
-							|You've never played this game &nbsp
-							i.fa.fa-download
-							br
-						else
-							br
-						br
-						//- br
-						//- i.fa.fa-history
-						//- |&nbsp last 2 weeks &nbsp
-						//- if steamGames.games[random].playtime_2weeks
-						//- 	//- != steamGames.games[random].playtime_2weeks
-						//- 	|!= steamGames.games[random].sum_2weeks
-						//- else
-						//- 	| 0 minutes
-						//- br
-						//- i.fa.fa-clock-o
-						//- |&nbsp since forever &nbsp
-						//- if steamGames.games[random].playtime_forever
-						//- 	//- != steamGames.games[random].playtime_forever
-						//- 	!= steamGames.games[random].sum_forever
-						//- else
-						//- 	| 0 minutes
-						//-|Your game for today : !{steamGames.games[random].name}
-						form(action="/shuffle", method="post")
-							button(type="submit", class="btn btn-info")
-								i.fa.fa-random
-								|&nbsp re-shuffle
+							form(class="form-horizontal", action="/shuffle", method="post")
+								fieldset
+									button(class="sweet-click btn btn-primary", data-appid="#{steamGames.games[random].appid}", data-name="#{steamGames.games[random].name}", data-playtime="#{steamGames.games[random].playtime_forever}")
+										i.fa.fa-play
+										|&nbsp play	
+									button(type="submit", class="btn btn-info")
+										i.fa.fa-random
+										|&nbsp re-shuffle
 			else
 				.well
 					i.fa.fa-frown-o.fa-2x
 					| &nbsp You have no games
+block script
+	script(src='/javascripts/sweet-alert-custom.js')

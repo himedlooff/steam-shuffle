@@ -1,8 +1,6 @@
 var Steam = require('steam-webapi');
 
-exports.show = function(req, res){
-	console.log(res.locals.steamGames.game_count);
-	
+exports.show = function(req, res){	
 	function renderGames (err, gamesJSON) {
     	if(err) return console.error(err);
     	//favGame(req.session.games);
