@@ -13,8 +13,6 @@ table a:not(.btn), .table a:not(.btn)
 	text-decoration: none;
 }
 
-td:empty{
-}
 
 .comment-pic{
 	display: block;
@@ -40,5 +38,8 @@ span.not-really{
 span.not-really:hover,
 span.not-really:focus{
 	opacity: 0.4;
-};
- 	
+}
+
+.btn {
+	margin-right: 5px;
+}
