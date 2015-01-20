@@ -42,7 +42,7 @@ if(steamGames.game_count != 0)
 
 			function run(value, row){
 				//-var run = "<a href="+'steam://run/'+value+">"+"<i class='fa fa-play fa-2x'>"+"</a>";
-				var run = "<i data-appid="+ value + " " + "data-name=" + escape(row.name)  + "   "+"class='fa fa-play fa-2x sweet-click link-like'>";
+				var run = "<i data-appid="+ value + " " + "data-name=" + escape(row.name)  + " " + "data-playtime="+  row.playtime_forever   + " "+"class='fa fa-play fa-2x sweet-click link-like'>";
 				//-var run = "<i data-appid="+ value + " " +"class='fa fa-play fa-2x'>";
 				return run;
 			}
