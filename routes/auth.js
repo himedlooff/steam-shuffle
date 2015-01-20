@@ -39,6 +39,7 @@ exports.return = function(req, res){
 	 	    steam.key = res.locals.api_key;
 		    
 	 	    var data = {
+	 	        key: res.locals.api_key,
 	 	        steamid : req.user._json.steamid,
 		        include_appinfo : true,
 		        include_played_free_games : true,
@@ -47,10 +48,22 @@ exports.return = function(req, res){
 
 		    steam.getOwnedGames(data, 
 		    	function (err, result) {
-			    	req.session.steamGames = !err ? result : null;
-			    	console.log("Saving game in session.");
-			    	req.session.favGame = favGame(result);
-			    	res.redirect("/");
+		    		err= true;
+
+		    		if (!err && result){
+
+			    		req.session.steamGames = result;
+			    		console.log("Saving game in session.");
+			    		req.session.favGame = favGame(result);
+			    		res.redirect("/");
+			    	}
+			    	else {
+			    		console.log("steam.getOwnedGames error");
+			    		console.log(err);
+						res.status(404)        // HTTP status 404: NotFound
+						   .send('Something went wrong');
+			    	} 
+
 			});
 		});
 
@@ -75,7 +88,7 @@ exports.account = function(req, res){
 
 
 function favGame(lib){
-	if(!lib || lib.game_count === 0) return null;
+	if(!lib || lib.game_count === 0 || !lib.games[0]) return null;
     var max_time = 0, max_i = 0, i = 0, len = lib.game_count;
     for (; i != len; ++i) {
         if (lib.games[i].playtime_forever > max_time) {
