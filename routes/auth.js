@@ -51,8 +51,9 @@ exports.return = function(req, res){
 		    		if (!err && result){
 
 			    		req.session.steamGames = result;
+			    		console.log(result);
 			    		console.log("Saving game in session.");
-			    		req.session.favGame = favGame(result);
+			    		//req.session.favGame = favGame(result);
 			    		res.redirect("/");
 			    	}
 			    	else {
@@ -85,15 +86,15 @@ exports.account = function(req, res){
 };
 
 
-function favGame(lib){
-	if(!lib || lib.game_count === 0 || !lib.games[0]) return null;
-    var max_time = 0, max_i = 0, i = 0, len = lib.game_count;
-    for (; i != len; ++i) {
-        if (lib.games[i].playtime_forever > max_time) {
-            max_time = lib.games[i].playtime_forever;
-            max_i = i;
-        }
-    }
-    console.log("Your favourite game is " + lib.games[max_i].name);
-    return max_i;
-}
+// function favGame(lib){
+// 	if(!lib || lib.game_count == 0) return null;
+//     var max_time = 0, max_i = 0, i = 0, len = lib.game_count;
+//     for (; i != len; ++i) {
+//         if (lib.games[i].playtime_forever > max_time) {
+//             max_time = lib.games[i].playtime_forever;
+//             max_i = i;
+//         }
+//     }
+//     console.log("Your favourite game is " + lib.games[max_i].name);
+//     return max_i;
+// }
