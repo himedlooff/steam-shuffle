@@ -36,21 +36,27 @@ exports.return = function(req, res){
 	 	Steam.ready(function(err) {
 	 	    if (err) return console.log(err);
 	 	    var steam = new Steam();
-	 	    steam.key = res.locals.api_key;
-		    
+	 	    //steam.key = res.locals.api_key;
+
+		    //console.log(res.locals.api_key);
+		    //console.log(req.user._json.steamid);
+	 	    
 	 	    var data = {
-	 	        key: res.locals.api_key,
+	 	        //key: res.locals.api_key,
 	 	        steamid : req.user._json.steamid,
 		        include_appinfo : true,
 		        include_played_free_games : true,
 		        appids_filter : ""
 		    };
-
+		    console.log("user");
+		    console.log(req.user);
+		    console.log("data.steamid" + data.steamid );
+		    console.log(Steam.key);
 		    steam.getOwnedGames(data, 
 		    	function (err, result) {
 		    		if (!err && result){
-
 			    		req.session.steamGames = result;
+			    		console.log("------------------------");
 			    		console.log(result);
 			    		console.log("Saving game in session.");
 			    		//req.session.favGame = favGame(result);
