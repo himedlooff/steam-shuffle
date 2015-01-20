@@ -48,8 +48,6 @@ exports.return = function(req, res){
 
 		    steam.getOwnedGames(data, 
 		    	function (err, result) {
-		    		err= true;
-
 		    		if (!err && result){
 
 			    		req.session.steamGames = result;
