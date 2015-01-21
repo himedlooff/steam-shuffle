@@ -29,10 +29,10 @@ html(lang='en')
 								a(href='/about')
 									|About
 							if(user_loc)
-								li
+								li(class= isPublic ? "" : "disabled")
 									a(href='/shuffle')
 										|Shuffle
-								li
+								li(class= isPublic ? "" : "disabled")
 									a(href='/games')
 										|Games
 						ul.nav.navbar-nav.navbar-right
@@ -50,11 +50,11 @@ html(lang='en')
 											a(href="/account")
 												i.fa.fa-user
 												|&nbsp Account
-										li
+										li(class= isPublic ? "" : "disabled")
 											a(href="/games")
 												i.fa.fa-list
 												|&nbsp Games
-										li
+										li(class= isPublic ? "" : "disabled")
 											a(href="/shuffle")
 												i.fa.fa-random
 												|&nbsp Shuffle

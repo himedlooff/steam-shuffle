@@ -5,8 +5,34 @@ block content
 			if (user_loc)
 				h3
 					|!{user_loc.displayName} &nbsp
-					a(href="#{user_json.profileurl}", style="color: white")
+					a(href="#{user_json.profileurl}")
 						i.fa.fa-steam-square
+					a(href="#{user_json.profileurl}/edit/settings")
+						| &nbsp
+						if (isPublic)
+							i.fa.fa-eye
+						if (!isPublic)
+							i.fa.fa-eye-slash
+							
+				if (!isPublic)
+					p
+						|Your profile is set to 
+						b 
+							|Private 
+						|or 
+						b
+							|Friends only 
+						|and I can't see your games.
+					p
+						|I thought we were 
+						a(href="https://www.youtube.com/watch?v=AAm6im8bZgo&feature=youtu.be&t=2m47s") friends...
+					p
+						|If you  
+						a(href="#{user_json.profileurl}/edit/settings")
+							|change your your mind 
+						|come back!
+
+
 				if (steamGames)
 					p
 						|Your have 

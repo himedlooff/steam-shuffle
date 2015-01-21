@@ -12,7 +12,7 @@ var index = require('./routes/index'),
 var app = express();
 
 var config = require('./config');
-    config(app);
+config(app);
 
 // Routes
 app.get('/', index.home);
@@ -22,17 +22,24 @@ app.get('/auth/steam/return', passport.authenticate('steam'), auth.return)
 app.get('/login', auth.login);
 app.get('/logout', auth.logout);
 app.get('/account', ensureAuthenticated, auth.account);
-app.get('/games', ensureAuthenticated, games.show);
-app.get('/shuffle', ensureAuthenticated, games.shuffle);
+app.get('/games', ensureAuthenticated, isPublic, games.show);
+app.get('/shuffle', ensureAuthenticated, isPublic, games.shuffle);
 app.post('/shuffle', ensureAuthenticated, games.shuffle);
 
 
 // Middleware
 function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) { 
-        return next(); 
+    if (req.isAuthenticated()) {
+        return next();
     }
     res.redirect('/login');
+}
+
+function isPublic(req, res, next){
+    if (req.session.isPublic){
+        return next();
+    }
+    res.redirect("/");
 }
 
 // Error handlers
@@ -42,7 +49,7 @@ app.use(function(req, res, next) {
     //TODO pretty 404 error page
     var err = new Error('Not Found');
     err.status = 404;
-   next(err);
+    next(err);
 });
 
 
@@ -74,7 +81,7 @@ app.use(function(err, req, res, next) {
 // Server
 
 var server = app.listen(app.locals.port, function() {
-  console.log('Express server listening on port ' + server.address().port);
+    console.log('Express server listening on port ' + server.address().port);
 });
 
 module.exports = app;

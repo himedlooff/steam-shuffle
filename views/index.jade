@@ -1,6 +1,5 @@
 //- var lib = typeof(steamGames) != 'undefined' ? JSON.parse(result) : { }
 //- var random = typeof(rnd) != 'undefined' ? rnd : -1
-
 extends layout
 
 block content
@@ -30,9 +29,8 @@ block content
 					|&nbsp Play
 			else
 				h3
-					|Heyo !{user_loc.displayName} !
+					|Hi !{user_loc.displayName}!
 				if (steamGames)
-					//- NO GAMES
 					if (steamGames.game_count == 0)
 						p
 							|You have no games. What are you doing here?
@@ -42,7 +40,7 @@ block content
 							a(href="http://store.steampowered.com/genre/Free%20to%20Play/")
 								|Free to Play 
 							|games on steam and come back.
-					
+
 					//- ONE GAME
 					if (steamGames.game_count == 1)
 						p
@@ -56,7 +54,7 @@ block content
 							a(href="http://store.steampowered.com/genre/Free%20to%20Play/")
 								|Free to Play 
 							|games on steam.
-					
+
 					//- 10 OR LESS GAMES
 					if (steamGames.game_count > 1 && steamGames.game_count <= 10)
 						p
@@ -167,5 +165,13 @@ block content
 							button(type="button", class="btn btn-info")
 								i.fa.fa-random
 								|&nbsp Shuffle!
-block script
-	script(src='/javascripts/shuffle.js')
+				if (!isPublic)
+					i.fa.fa-eye-slash.fa-5x
+					p
+						|Oh noes! I went blind!
+					p
+						| Can't see anything. It's too damn private.
+					p
+						|If you wanna play with me just   
+						a(href="#{user_json.profileurl}/edit/settings") show yourself 
+						| and come back!

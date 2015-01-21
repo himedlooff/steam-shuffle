@@ -10,7 +10,7 @@ module.exports= function(app){
 	app.locals.port=  process.env.PORT || 3000;
 	app.locals.api_key = process.env.API_KEY;
 	app.locals.hostnames = ["www.steamshuffle.com", "steamshuffle.com" , "www.steam-shuffle.com", "steam-shuffle.com", "steamshuffle.herokuapp.com"];
-
+	
 	/***		MODULES			***/
 
 	var express = require('express'),
@@ -18,7 +18,7 @@ module.exports= function(app){
 	    favicon = require('serve-favicon'),
 	    logger = require('morgan'),
 	    cookieParser = require('cookie-parser'),
-	   // bodyParser = require('body-parser'),
+	   	bodyParser = require('body-parser'),
 	    exsession = require('express-session'),
 	    passport = require('passport');
 
@@ -39,8 +39,8 @@ module.exports= function(app){
 	app.use(express.static(path.join(__dirname, 'public')));
 	app.use(cookieParser());
 
-	//app.use(bodyParser.json());
-	//app.use(bodyParser.urlencoded({ extended: false }));
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: false }));
 	
 	
 	/***		SESSION SETTINGS	***/
@@ -96,18 +96,23 @@ module.exports= function(app){
 
 	/***		MIDDLEWARE LOCALS HELPER	***/
 	app.use(function(req, res, next){
-	    if (req.session.steamGames) {
+		if (req.session.steamGames) {
 	        res.locals.steamGames = req.session.steamGames;
-	        }
+	    }
 	    
 	    if (req.session.passport.user) {
 	        res.locals.user_json = req.session.passport.user._json;
 	        res.locals.user_loc = req.user;
 		}
 
+		if (req.session.isPublic != undefined){
+			res.locals.isPublic = req.session.isPublic;
+		
+		}
 		if (req.session.favGame){
 			res.locals.favGame= req.session.favGame;
 		}
+
   	  next();
 	 });
  }
