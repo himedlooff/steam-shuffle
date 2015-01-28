@@ -9,7 +9,12 @@ module.exports= function(app){
 	app.locals.secret = process.env.COOKIE_SECRET;
 	app.locals.port=  process.env.PORT || 3000;
 	app.locals.api_key = process.env.API_KEY;
+	
+	var OpenIDurl_loc = 'http://localhost:3000/auth/steam/return',
+		OpenIDrealm_loc =  'http://localhost:3000/auth/';
+	
 	app.locals.hostnames = ["www.steamshuffle.com", "steamshuffle.com" , "www.steam-shuffle.com", "steam-shuffle.com", "steamshuffle.herokuapp.com"];
+	
 	
 	/***		MODULES			***/
 
@@ -70,13 +75,23 @@ module.exports= function(app){
 	app.use(function(req,res,next){
 
 		var OpenIDurl, OpenIDrealm;
-		if (app.locals.hostnames.indexOf(req.hostname) > -1) {
+
+		if (app.get('env') == 'development'){
+			OpenIDurl = OpenIDurl_loc;
+			OpenIDrealm = OpenIDrealm_loc;
+		}
+		else{ 
+			if (app.locals.hostnames.indexOf(req.hostname) > -1) {
 			  	OpenIDurl = 'http://' + req.hostname + '/auth/steam/return';
 			    OpenIDrealm = 'http://' + req.hostname;
-	  	}
-	  	else {
-		   		 OpenIDurl = 'http://localhost:3000/auth/steam/return';
-			   	 OpenIDrealm =  'http://localhost:3000/auth/';
+	  		}
+	  	
+		  	else {
+		  			res.status(403);
+		  			res.redirect('/');
+			   		 // OpenIDurl = 'http://localhost:3000/auth/steam/return';
+				   	 // OpenIDrealm =  'http://localhost:3000/auth/';
+			}
 		}
 		passport.use(new SteamStrategy({
 			  	returnURL: OpenIDurl,
